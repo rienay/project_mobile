@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:project_mobile/ui/auth/login_page.dart';
-import 'package:project_mobile/ui/home/open_slider_page.dart';
+import 'package:project_mobile/ui/home/onboarding_page.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
@@ -12,81 +11,104 @@ class SplashPage extends StatefulWidget {
 
 class _SplashPageState extends State<SplashPage> {
 
-  double _circleSize = 0.0;
-  bool _showHeart = false;
+  double _circleSize = 30;
+  bool _showLove = false;
 
   @override
   void initState() {
     super.initState();
-    startSplash();
+    _startSplash();
   }
 
-  Future<void> startSplash() async {
-    await Future.delayed(const Duration(milliseconds: 300));
-    if (mounted) {
-      setState(() {
-        _circleSize = 150.0;
-      });
-    }
+  Future<void> _startSplash() async {
 
-    await Future.delayed(const Duration(milliseconds: 800));
-    if (mounted) {
-      setState(() {
-        _showHeart = true;
-      });
-    }
+    // Delay awal
+    await Future.delayed(const Duration(milliseconds: 200));
 
-    await Future.delayed(const Duration(milliseconds: 1500));
     if (!mounted) return;
 
-    // kemungkinan cek login/session
-    bool isLogin = false;
+    // Lingkaran membesar sampai fullscreen
+    setState(() {
+      _circleSize = 9000;
+    });
 
-    if (isLogin) {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (_) => const OpenSliderPage(),
-        ),
-      );
-    } else {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (_) => const LoginPage(),
-        ),
-      );
-    }
+    // Tunggu animasi fullscreen
+    await Future.delayed(const Duration(milliseconds: 1200));
+
+    if (!mounted) return;
+
+    // Tampilkan love kecil
+    setState(() {
+      _showLove = true;
+    });
+
+    // Tunggu sebelum pindah
+    await Future.delayed(const Duration(milliseconds: 1400));
+
+    if (!mounted) return;
+
+    Navigator.pushReplacement(
+      context,
+      PageRouteBuilder(
+        transitionDuration: const Duration(milliseconds: 700),
+        pageBuilder: (_, animation, __) =>
+            const OnboardingPage(),
+        transitionsBuilder: (_, animation, __, child) {
+          return FadeTransition(
+            opacity: animation,
+            child: child,
+          );
+        },
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
+
+    const Color primaryPink = Color(0xFFE91E63);
+    const Color softPinkBg = Color(0xFFFFF5F7);
+
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: softPinkBg,
       body: Center(
-        child: AnimatedSwitcher(
-          duration: const Duration(milliseconds: 600),
-          transitionBuilder: (Widget child, Animation<double> animation) {
-            return ScaleTransition(scale: animation, child: child);
-          },
-          child: _showHeart
-              ? const Icon(
-                  Icons.favorite,
-                  key: ValueKey('heart'),
-                  color: Colors.pinkAccent,
-                  size: 150,
-                )
-              : AnimatedContainer(
-                  key: const ValueKey('circle'),
-                  duration: const Duration(milliseconds: 800),
-                  curve: Curves.easeOutBack, // Memberikan efek memantul saat membesar
-                  width: _circleSize,
-                  height: _circleSize,
-                  decoration: const BoxDecoration(
-                    color: Colors.pinkAccent,
-                    shape: BoxShape.circle,
-                  ),
+        child: Stack(
+          alignment: Alignment.center,
+          children: [
+
+            // Lingkaran Membesar
+            OverflowBox(
+              maxWidth: double.infinity,
+              maxHeight: double.infinity,
+              child: AnimatedContainer(
+                duration: const Duration(milliseconds: 1500),
+                curve: Curves.easeInOutCubic,
+                width: _circleSize,
+                height: _circleSize,
+                decoration: BoxDecoration(
+                  color: primaryPink.withOpacity(0.15),
+                  shape: BoxShape.circle,
                 ),
+              ),
+            ),
+
+            // Love kecil muncul setelah fullscreen
+            AnimatedOpacity(
+              duration: const Duration(milliseconds: 700),
+              opacity: _showLove ? 1 : 0,
+              child: AnimatedScale(
+                duration: const Duration(milliseconds: 700),
+                curve: Curves.easeOutBack,
+                scale: _showLove ? 1 : 0,
+                child: const Icon(
+                  Icons.favorite,
+                  color: primaryPink,
+                  size: 42,
+                ),
+              ),
+            ),
+
+          ],
         ),
       ),
     );

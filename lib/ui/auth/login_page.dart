@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project_mobile/helpers/api_helper.dart';
-import 'package:project_mobile/ui/home/open_slider_page.dart';
+import 'package:project_mobile/ui/home/home_page.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -37,7 +37,7 @@ class _LoginPageState extends State<LoginPage> {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (_) => const OpenSliderPage(),
+            builder: (_) => const HomePage(),
           ),
         );
       }
