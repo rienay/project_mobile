@@ -12,6 +12,9 @@ class SplashPage extends StatefulWidget {
 
 class _SplashPageState extends State<SplashPage> {
 
+  double _circleSize = 0.0;
+  bool _showHeart = false;
+
   @override
   void initState() {
     super.initState();
@@ -19,7 +22,22 @@ class _SplashPageState extends State<SplashPage> {
   }
 
   Future<void> startSplash() async {
-    await Future.delayed(const Duration(seconds: 3));
+    await Future.delayed(const Duration(milliseconds: 300));
+    if (mounted) {
+      setState(() {
+        _circleSize = 150.0;
+      });
+    }
+
+    await Future.delayed(const Duration(milliseconds: 800));
+    if (mounted) {
+      setState(() {
+        _showHeart = true;
+      });
+    }
+
+    await Future.delayed(const Duration(milliseconds: 1500));
+    if (!mounted) return;
 
     // kemungkinan cek login/session
     bool isLogin = false;
@@ -44,25 +62,31 @@ class _SplashPageState extends State<SplashPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.asset(
-              'assets/images/logo.png',
-              width: 120,
-            ),
-            const SizedBox(height: 20),
-            const Text(
-              'Love Wedding',
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 20),
-            const CircularProgressIndicator(),
-          ],
+        child: AnimatedSwitcher(
+          duration: const Duration(milliseconds: 600),
+          transitionBuilder: (Widget child, Animation<double> animation) {
+            return ScaleTransition(scale: animation, child: child);
+          },
+          child: _showHeart
+              ? const Icon(
+                  Icons.favorite,
+                  key: ValueKey('heart'),
+                  color: Colors.pinkAccent,
+                  size: 150,
+                )
+              : AnimatedContainer(
+                  key: const ValueKey('circle'),
+                  duration: const Duration(milliseconds: 800),
+                  curve: Curves.easeOutBack, // Memberikan efek memantul saat membesar
+                  width: _circleSize,
+                  height: _circleSize,
+                  decoration: const BoxDecoration(
+                    color: Colors.pinkAccent,
+                    shape: BoxShape.circle,
+                  ),
+                ),
         ),
       ),
     );
