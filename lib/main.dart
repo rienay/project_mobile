@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project_mobile/ui/main_navigator.dart';
 import 'package:project_mobile/ui/splash/splash_page.dart';
 
 void main() {

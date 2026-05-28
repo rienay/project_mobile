@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:project_mobile/helpers/api_helper.dart';
 import 'package:project_mobile/ui/auth/login_page.dart';
+import 'package:project_mobile/ui/main_navigator.dart'; 
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});

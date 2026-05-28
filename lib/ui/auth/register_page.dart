@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 // Import file login_page.dart sudah ditambahkan
 import 'package:project_mobile/ui/auth/login_page.dart';
+import 'package:project_mobile/helpers/api_helper.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -20,16 +21,47 @@ class _RegisterPageState extends State<RegisterPage> {
   bool rememberMe = false;
 
   Future<void> register() async {
+    if (emailController.text.isEmpty || passwordController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Email dan password tidak boleh kosong!')));
+      return;
+    }
+    
+    if (passwordController.text != confirmPasswordController.text) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Password tidak cocok!')));
+      return;
+    }
+
+    if (!rememberMe) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Anda harus menyetujui Terms / Remember me')));
+      return;
+    }
+
     setState(() {
       isLoading = true;
     });
 
-    // Simulasi proses registrasi
-    await Future.delayed(const Duration(seconds: 2));
-
+    try {
+      // Memanggil fungsi register
+      await ApiHelper.register(emailController.text, passwordController.text);
+      
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Registrasi sukses! Silakan Log In.')));
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const LoginPage()),
+        );
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Gagal: $e')));
+      }
+    }
+    
+    if (mounted) {
     setState(() {
       isLoading = false;
     });
+    }
   }
 
   @override

@@ -8,39 +8,38 @@ class ApiHelper {
   static const String baseUrl =
       'https://your-api-url.com/api';
 
+  // Fungsi Simulasi Register
+  static Future<void> register(String email, String password) async {
+    await Future.delayed(const Duration(seconds: 1)); // Simulasi loading
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    
+    // Menyimpan data email dan password untuk simulasi login
+    await prefs.setString('registered_email', email);
+    await prefs.setString('registered_password', password);
+  }
+
   static Future<Map<String, dynamic>> login(
     String email,
     String password,
   ) async {
+    await Future.delayed(const Duration(seconds: 1)); // Simulasi loading
+    SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    final response = await http.post(
-      Uri.parse('$baseUrl/login'),
-      body: {
-        'email': email,
-        'password': password,
-      },
-    );
+    // Mengambil data yang disimpan saat register
+    String? regEmail = prefs.getString('registered_email');
+    String? regPassword = prefs.getString('registered_password');
 
-    final data = jsonDecode(response.body);
-
-    if (response.statusCode == 200) {
-
-      SharedPreferences prefs =
-          await SharedPreferences.getInstance();
-
-      await prefs.setString(
-        'token',
-        data['token'],
-      );
-
-      return data;
-
+    // Mencocokkan inputan login dengan data register
+    if (regEmail == email && regPassword == password) {
+      // Jika cocok, buat token login
+      await prefs.setString('token', 'dummy_token_123');
+      return {'success': true, 'token': 'dummy_token_123'};
     } else {
-
-      throw Exception(
-        data['message'] ?? 'Login gagal',
-      );
-
+      if (regEmail == null) {
+        throw Exception('Akun belum terdaftar. Silakan Sign Up terlebih dahulu.');
+      } else {
+        throw Exception('Email atau password salah.');
+      }
     }
   }
 
@@ -72,11 +71,10 @@ class ApiHelper {
   }
 
   static Future<void> logout() async {
-
-    SharedPreferences prefs =
-        await SharedPreferences.getInstance();
-
-    await prefs.clear();
-
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    
+    // Hanya hapus token login agar status menjadi logout, 
+    // tapi akun yang di-register tidak ikut terhapus.
+    await prefs.remove('token');
   }
 }

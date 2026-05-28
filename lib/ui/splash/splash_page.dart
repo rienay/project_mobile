@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:project_mobile/ui/home/onboarding_page.dart';
+import 'package:project_mobile/ui/main_navigator.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
@@ -47,12 +49,22 @@ class _SplashPageState extends State<SplashPage> {
 
     if (!mounted) return;
 
+    // Cek status login (Token)
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString('token');
+
     Navigator.pushReplacement(
       context,
       PageRouteBuilder(
         transitionDuration: const Duration(milliseconds: 700),
-        pageBuilder: (_, animation, __) =>
-            const OnboardingPage(),
+        pageBuilder: (_, animation, __) {
+          // Jika ada token, langsung masuk ke Home. Jika tidak, masuk Onboarding
+          if (token != null && token.isNotEmpty) {
+            return const MainNavigation();
+          } else {
+            return const OnboardingPage();
+          }
+        },
         transitionsBuilder: (_, animation, __, child) {
           return FadeTransition(
             opacity: animation,

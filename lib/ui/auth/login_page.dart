@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project_mobile/helpers/api_helper.dart';
-import 'package:project_mobile/ui/home/home_page.dart';
+import 'package:project_mobile/ui/main_navigator.dart';
 import 'package:project_mobile/ui/auth/register_page.dart';
 
 class LoginPage extends StatefulWidget {
@@ -23,6 +23,11 @@ class _LoginPageState extends State<LoginPage> {
   bool rememberMe = false;
 
   Future<void> login() async {
+    // Validasi kosong
+    if (emailController.text.isEmpty || passwordController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Email dan Password harus diisi!')));
+      return;
+    }
 
     setState(() {
       isLoading = true;
@@ -39,7 +44,7 @@ class _LoginPageState extends State<LoginPage> {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (_) => const HomePage(),
+            builder: (_) => const MainNavigation(),
           ),
         );
       }
