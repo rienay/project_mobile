@@ -62,6 +62,9 @@ flutter:
   assets:
     - assets/images/
     - assets/icons/
+    - assets/open_slider/
+    - assets/trend_wedding/
+    - assets/wedding_reference/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
