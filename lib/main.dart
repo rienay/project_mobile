@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'ui/home/vendor_list_page.dart'; // Import file daftar vendor yang kita buat tadi
+// GANTI import lama dengan ini:
+import 'package:project_mobile/ui/vendor/vendor_list_page.dart'; // Import file daftar vendor yang kita buat tadi
 
 void main() {
   runApp(const MyApp());
