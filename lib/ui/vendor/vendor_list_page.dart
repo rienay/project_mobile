@@ -48,7 +48,6 @@ class _VendorListPageState extends State<VendorListPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      // ✅ FIX: Pakai NotificationListener biar scroll horizontal & vertical ga konflik
       body: SafeArea(
         child: NotificationListener<ScrollNotification>(
           onNotification: (_) => false,
@@ -157,12 +156,10 @@ class _VendorListPageState extends State<VendorListPage> {
                               fontWeight: FontWeight.w500),
                         ),
                       ),
-                      // ✅ FIX: SizedBox + ListView dengan physics eksplisit
                       SizedBox(
                         height: 260,
                         child: ListView.builder(
                           scrollDirection: Axis.horizontal,
-                          // ✅ KEY FIX: physics ini yang bikin geser lancar
                           physics: const AlwaysScrollableScrollPhysics(),
                           padding: const EdgeInsets.only(left: 20, right: 8),
                           itemCount: kategoriVendor[kategori]!.length,

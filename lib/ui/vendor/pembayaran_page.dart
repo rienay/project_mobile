@@ -316,7 +316,6 @@ class _PembayaranPageState extends State<PembayaranPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Metode Pembayaran card
             Container(
               width: double.infinity,
               padding: const EdgeInsets.all(16),
@@ -344,7 +343,6 @@ class _PembayaranPageState extends State<PembayaranPage> {
             ),
             const SizedBox(height: 16),
 
-            // Detail sesuai metode
             Container(
               width: double.infinity,
               padding: const EdgeInsets.all(16),
@@ -359,8 +357,6 @@ class _PembayaranPageState extends State<PembayaranPage> {
                       : _buildEWalletDetail(),
             ),
             const SizedBox(height: 24),
-
-            // Konfirmasi button
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(

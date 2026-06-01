@@ -27,9 +27,6 @@ class _VendorDetailPageState extends State<VendorDetailPage> {
     );
   }
 
-  // =====================
-  // HEADER BANNER
-  // =====================
   Widget _buildHeader(BuildContext context) {
     return SizedBox(
       height: 280,
@@ -75,9 +72,6 @@ class _VendorDetailPageState extends State<VendorDetailPage> {
     );
   }
 
-  // =====================
-  // VENDOR INFO
-  // =====================
   Widget _buildVendorInfo() {
     final tags = _inferTags(widget.vendor.name);
     return Padding(
@@ -149,9 +143,6 @@ class _VendorDetailPageState extends State<VendorDetailPage> {
     return ['Wedding', 'Events'];
   }
 
-  // =====================
-  // STATS
-  // =====================
   Widget _buildStats() {
     final stats = _inferStats(widget.vendor.name);
     return Container(
@@ -197,9 +188,6 @@ class _VendorDetailPageState extends State<VendorDetailPage> {
     };
   }
 
-  // =====================
-  // PORTFOLIO
-  // =====================
   Widget _buildPortfolio() {
     final List<String> portfolioImages = widget.vendor.portfolioImages.isNotEmpty
         ? widget.vendor.portfolioImages : [widget.vendor.mainImage];
@@ -261,9 +249,6 @@ class _VendorDetailPageState extends State<VendorDetailPage> {
     );
   }
 
-  // =====================
-  // SERVICES
-  // =====================
   Widget _buildServices() {
     final services = [
       {'icon': Icons.favorite_outline, 'label': 'Wedding\nVenue', 'color': const Color(0xFFF43F8B)},
@@ -321,9 +306,6 @@ class _VendorDetailPageState extends State<VendorDetailPage> {
     );
   }
 
-  // =====================
-  // PRICING
-  // =====================
   Widget _buildPricingPackages() {
     final prices = _inferPrices(widget.vendor.name);
     return Column(
@@ -463,9 +445,6 @@ class _VendorDetailPageState extends State<VendorDetailPage> {
     );
   }
 
-  // =====================
-  // REVIEWS
-  // =====================
   Widget _buildClientReviews() {
     final reviews = _inferReviews(widget.vendor.name);
     return Column(
@@ -542,9 +521,6 @@ class _VendorDetailPageState extends State<VendorDetailPage> {
     ];
   }
 
-  // =====================
-  // ABOUT US
-  // =====================
   Widget _buildAboutUs() {
     final about = _inferAbout(widget.vendor.name);
     return Container(
@@ -608,9 +584,6 @@ class _VendorDetailPageState extends State<VendorDetailPage> {
     };
   }
 
-  // =====================
-  // GET IN TOUCH — ✅ SEMUA TOMBOL SUDAH TERHUBUNG
-  // =====================
   Widget _buildGetInTouch() {
     // Nomor & email berdasarkan vendor
     final phone = _inferPhone(widget.vendor.name);
@@ -624,8 +597,6 @@ class _VendorDetailPageState extends State<VendorDetailPage> {
           child: Text('Get In Touch', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black87)),
         ),
         const SizedBox(height: 16),
-
-        // ✅ BOOKING — navigate ke BookingKonsultasiPage
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: SizedBox(
@@ -655,7 +626,6 @@ class _VendorDetailPageState extends State<VendorDetailPage> {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Row(children: [
-            // ✅ CALL — buka HubungiVendorSheet
             Expanded(
               child: OutlinedButton.icon(
                 onPressed: () {
@@ -677,7 +647,6 @@ class _VendorDetailPageState extends State<VendorDetailPage> {
               ),
             ),
             const SizedBox(width: 12),
-            // ✅ CHAT — buka HubungiVendorSheet (WhatsApp)
             Expanded(
               child: OutlinedButton.icon(
                 onPressed: () {
@@ -748,9 +717,6 @@ class _VendorDetailPageState extends State<VendorDetailPage> {
     return 'Jl. Ahmad Yani No. 221, Cilacap Street';
   }
 
-  // =====================
-  // BUILD
-  // =====================
   @override
   Widget build(BuildContext context) {
     return Scaffold(

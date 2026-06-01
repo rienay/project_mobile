@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-// GANTI import lama dengan ini:
-import 'package:project_mobile/ui/vendor/vendor_list_page.dart'; // Import file daftar vendor yang kita buat tadi
+import 'package:project_mobile/ui/vendor/vendor_list_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,10 +14,9 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Wedding Vendor App',
       theme: ThemeData(
-        brightness: Brightness.dark, // Set tema dark biar serasi sama designdark-mu
+        brightness: Brightness.dark, 
         primarySwatch: Colors.pink,
       ),
-      // DI SINI KUNCINYA: Langsung arahkan home ke VendorListPage()
       home: const VendorListPage(), 
     );
   }
