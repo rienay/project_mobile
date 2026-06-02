@@ -105,24 +105,23 @@ class _BookingKonsultasiPageState extends State<BookingKonsultasiPage> {
           ],
         ),
         const SizedBox(height: 8),
-        GestureDetector(
+        TextField(
+          controller: controller,
+          keyboardType: keyboardType,
+          readOnly: onTap != null,
           onTap: onTap,
-          child: TextField(
-            controller: controller,
-            keyboardType: keyboardType,
-            readOnly: onTap != null,
-            decoration: InputDecoration(
-              hintText: hint,
-              hintStyle:
-                  TextStyle(color: Colors.grey.shade400, fontSize: 13),
-              filled: true,
-              fillColor: Colors.grey.shade100,
-              contentPadding: const EdgeInsets.symmetric(
-                  horizontal: 16, vertical: 14),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12),
-                borderSide: BorderSide.none,
-              ),
+          style: const TextStyle(color: Colors.black87),
+          decoration: InputDecoration(
+            hintText: hint,
+            hintStyle:
+                TextStyle(color: Colors.grey.shade400, fontSize: 13),
+            filled: true,
+            fillColor: Colors.grey.shade100,
+            contentPadding: const EdgeInsets.symmetric(
+                horizontal: 16, vertical: 14),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+              borderSide: BorderSide.none,
             ),
           ),
         ),

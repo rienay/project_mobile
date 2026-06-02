@@ -142,6 +142,7 @@ class _LoginPageState extends State<LoginPage> {
                 const SizedBox(height: 8),
                 TextField(
                   controller: emailController,
+                  style: const TextStyle(color: Colors.black87),
                   decoration: InputDecoration(
                     contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
                     enabledBorder: OutlineInputBorder(
@@ -162,6 +163,7 @@ class _LoginPageState extends State<LoginPage> {
                 TextField(
                   controller: passwordController,
                   obscureText: isObsecure,
+                  style: const TextStyle(color: Colors.black87),
                   decoration: InputDecoration(
                     contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
                     enabledBorder: OutlineInputBorder(

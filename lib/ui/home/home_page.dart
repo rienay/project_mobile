@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:project_mobile/helpers/api_helper.dart';
 import 'package:project_mobile/ui/auth/login_page.dart';
 import 'package:project_mobile/ui/main_navigator.dart'; 
+import 'package:project_mobile/ui/home/open_slider.dart';
 
 void main() {
   runApp(const MyApp());
@@ -39,41 +40,49 @@ class _HomePageState extends State<HomePage> {
       'id': '1',
       'title': 'Urban Loft',
       'image': 'assets/wedding_reference/Urban_Loft.png',
+      'slider_image': 'assets/open_slider/Urban_Loft.jpg',
     },
     {
       'id': '2',
       'title': 'Tropikal',
       'image': 'assets/wedding_reference/Tropikal.png',
+      'slider_image': 'assets/open_slider/tropikal_paradise.png',
     },
     {
       'id': '3',
       'title': 'Blossom',
       'image': 'assets/wedding_reference/Blossom.png',
+      'slider_image': 'assets/open_slider/Blosom_Florist.png',
     },
     {
       'id': '4',
       'title': 'Beach',
       'image': 'assets/wedding_reference/Beach.png',
+      'slider_image': 'assets/open_slider/Beach_Sunset.png',
     },
     {
       'id': '5',
       'title': 'Bridal',
       'image': 'assets/wedding_reference/Bridal.png',
+      'slider_image': 'assets/open_slider/Bridal_Gift.png',
     },
     {
       'id': '6',
       'title': 'Minimalist',
       'image': 'assets/wedding_reference/Minimalist.png',
+      'slider_image': 'assets/open_slider/Minimalist_Decor.png',
     },
     {
       'id': '7',
       'title': 'Javanese',
       'image': 'assets/wedding_reference/Javanese.png',
+      'slider_image': 'assets/open_slider/Javanese.png',
     },
     {
       'id': '8',
       'title': 'Balines',
       'image': 'assets/wedding_reference/Balines.png',
+      'slider_image': 'assets/open_slider/Balines.png',
     },
   ];
 
@@ -111,6 +120,54 @@ class _HomePageState extends State<HomePage> {
       'description': 'Romantis',
       'image': 'assets/trend_wedding/Garden_Romance2.png',
       'rating': 4.0,
+    },
+  ];
+
+  // Trend MUA list
+  final List<Map<String, dynamic>> trendMUA = [
+    {
+      'title': 'Flawless Beauty Makeup',
+      'description': 'Tampil cantik natural dan elegan',
+      'image': 'assets/wedding_reference/Javanese.png',
+      'rating': 4.8,
+    },
+    {
+      'title': 'Glamour Touch',
+      'description': 'Spesialis makeup pengantin',
+      'image': 'assets/wedding_reference/Bridal.png',
+      'rating': 4.5,
+    },
+  ];
+
+  // Trend WO list
+  final List<Map<String, dynamic>> trendWO = [
+    {
+      'title': 'Dream Organizer',
+      'description': 'Wujudkan pernikahan impian tanpa stres',
+      'image': 'assets/trend_wedding/Crystal_Ballroom.png',
+      'rating': 4.9,
+    },
+    {
+      'title': 'Perfect Day WO',
+      'description': 'Layanan perencana pernikahan profesional',
+      'image': 'assets/trend_wedding/Garden_Wedding.png',
+      'rating': 4.7,
+    },
+  ];
+
+  // Trend Photografer & videografer list
+  final List<Map<String, dynamic>> trendPhotoVideo = [
+    {
+      'title': 'Timeless Moments',
+      'description': 'Abadikan setiap detik berharga',
+      'image': 'assets/trend_wedding/Opulent_Vintage.png',
+      'rating': 4.9,
+    },
+    {
+      'title': 'Cinematic Love Story',
+      'description': 'Video pernikahan kualitas film',
+      'image': 'assets/wedding_reference/Beach.png',
+      'rating': 4.6,
     },
   ];
 
@@ -163,7 +220,7 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             
-            const SizedBox(height: 24),
+            const Divider(color: Color(0xFFEEEEEE), height: 40, thickness: 1, indent: 16, endIndent: 16),
             
             // Trend Wedding Heading
             Padding(
@@ -200,6 +257,117 @@ class _HomePageState extends State<HomePage> {
                 },
               ),
             ),
+            const Divider(color: Color(0xFFEEEEEE), height: 40, thickness: 1, indent: 16, endIndent: 16),
+
+            // Trend MUA Heading
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: Text(
+                'Trend MUA',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.grey[900],
+                  letterSpacing: -0.2,
+                ),
+              ),
+            ),
+            
+            const SizedBox(height: 16),
+            
+            // Trend MUA Cards
+            SizedBox(
+              height: 250,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                padding: const EdgeInsets.symmetric(horizontal: 12),
+                itemCount: trendMUA.length,
+                itemBuilder: (context, index) {
+                  final item = trendMUA[index];
+                  return _buildTrendCard(
+                    context,
+                    item['title'],
+                    item['description'],
+                    item['image'],
+                    item['rating'],
+                  );
+                },
+              ),
+            ),
+            const Divider(color: Color(0xFFEEEEEE), height: 40, thickness: 1, indent: 16, endIndent: 16),
+
+            // Trend WO Heading
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: Text(
+                'Trend WO',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.grey[900],
+                  letterSpacing: -0.2,
+                ),
+              ),
+            ),
+            
+            const SizedBox(height: 16),
+            
+            // Trend WO Cards
+            SizedBox(
+              height: 250,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                padding: const EdgeInsets.symmetric(horizontal: 12),
+                itemCount: trendWO.length,
+                itemBuilder: (context, index) {
+                  final item = trendWO[index];
+                  return _buildTrendCard(
+                    context,
+                    item['title'],
+                    item['description'],
+                    item['image'],
+                    item['rating'],
+                  );
+                },
+              ),
+            ),
+            const Divider(color: Color(0xFFEEEEEE), height: 40, thickness: 1, indent: 16, endIndent: 16),
+
+            // Trend Photografer & Videografer Heading
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: Text(
+                'Trend Photografer & Videografer',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.grey[900],
+                  letterSpacing: -0.2,
+                ),
+              ),
+            ),
+            
+            const SizedBox(height: 16),
+            
+            // Trend Photografer & Videografer Cards
+            SizedBox(
+              height: 250,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                padding: const EdgeInsets.symmetric(horizontal: 12),
+                itemCount: trendPhotoVideo.length,
+                itemBuilder: (context, index) {
+                  final item = trendPhotoVideo[index];
+                  return _buildTrendCard(
+                    context,
+                    item['title'],
+                    item['description'],
+                    item['image'],
+                    item['rating'],
+                  );
+                },
+              ),
+            ),
             const SizedBox(height: 32),
           ],
         ),
@@ -212,7 +380,7 @@ class _HomePageState extends State<HomePage> {
     return Stack(
       children: [
         Container(
-          height: 300,
+          height: 240,
           width: double.infinity,
           decoration: const BoxDecoration(
             image: DecorationImage(
@@ -223,7 +391,7 @@ class _HomePageState extends State<HomePage> {
         ),
         // Dark linear aesthetic overlay gradient
         Container(
-          height: 300,
+          height: 240,
           decoration: BoxDecoration(
             gradient: LinearGradient(
               begin: Alignment.topCenter,
@@ -277,6 +445,21 @@ class _HomePageState extends State<HomePage> {
         setState(() {
           _selectedCategoryId = id;
         });
+
+        // Cari index dari item yang di klik
+        int initialIndex = categories.indexWhere((cat) => cat['id'] == id);
+        if (initialIndex == -1) initialIndex = 0;
+
+        // Buka halaman slider dengan mengirim daftar kategori
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (_) => OpenSlider(
+              categories: categories,
+              initialIndex: initialIndex,
+            ),
+          ),
+        );
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8.0),
