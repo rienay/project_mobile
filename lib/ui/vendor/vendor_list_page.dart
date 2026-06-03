@@ -10,7 +10,7 @@ class VendorListPage extends StatefulWidget {
 }
 
 class _VendorListPageState extends State<VendorListPage> {
-  int _currentIndex = 1;
+  // HAPUS: int _currentIndex = 1; ← sudah dihapus, diurus main_navigation.dart
   int _currentBannerIndex = 0;
   final PageController _bannerController = PageController();
 
@@ -84,7 +84,7 @@ class _VendorListPageState extends State<VendorListPage> {
                                       end: Alignment.topCenter,
                                       colors: [
                                         Colors.black.withValues(alpha: 0.6),
-                                        Colors.transparent
+                                        Colors.transparent,
                                       ],
                                     ),
                                   ),
@@ -101,14 +101,18 @@ class _VendorListPageState extends State<VendorListPage> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('Sambut perjalanan cintamu',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold)),
+                            Text(
+                              'Sambut perjalanan cintamu',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold),
+                            ),
                             SizedBox(height: 4),
-                            Text('Biarkan kami menghias hari untuk hari spesialmu!',
-                                style: TextStyle(color: Colors.white70, fontSize: 12)),
+                            Text(
+                              'Biarkan kami menghias hari untuk hari spesialmu!',
+                              style: TextStyle(color: Colors.white70, fontSize: 12),
+                            ),
                           ],
                         ),
                       ),
@@ -214,7 +218,7 @@ class _VendorListPageState extends State<VendorListPage> {
                                             colors: [
                                               Colors.black
                                                   .withValues(alpha: 0.6),
-                                              Colors.transparent
+                                              Colors.transparent,
                                             ],
                                           ),
                                         ),
@@ -228,21 +232,24 @@ class _VendorListPageState extends State<VendorListPage> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
-                                          Text(vendor.name,
-                                              style: const TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 16,
-                                                  fontWeight:
-                                                      FontWeight.bold)),
+                                          Text(
+                                            vendor.name,
+                                            style: const TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.bold),
+                                          ),
                                           const SizedBox(height: 2),
-                                          Text(vendor.description,
-                                              style: const TextStyle(
-                                                  color: Colors.white70,
-                                                  fontSize: 11)),
+                                          Text(
+                                            vendor.description,
+                                            style: const TextStyle(
+                                                color: Colors.white70,
+                                                fontSize: 11),
+                                          ),
                                           const SizedBox(height: 6),
                                           Row(
-                                            children:
-                                                List.generate(5, (starIndex) {
+                                            children: List.generate(5,
+                                                (starIndex) {
                                               return Icon(
                                                 starIndex < 4
                                                     ? Icons.star
@@ -270,34 +277,6 @@ class _VendorListPageState extends State<VendorListPage> {
             ],
           ),
         ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _currentIndex,
-        type: BottomNavigationBarType.fixed,
-        backgroundColor: Colors.white,
-        selectedItemColor: const Color(0xFFF43F8B),
-        unselectedItemColor: Colors.grey,
-        selectedFontSize: 11,
-        unselectedFontSize: 11,
-        onTap: (index) => setState(() => _currentIndex = index),
-        items: const [
-          BottomNavigationBarItem(
-              icon: Icon(Icons.home_outlined),
-              activeIcon: Icon(Icons.home),
-              label: 'Home'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.people_outline),
-              activeIcon: Icon(Icons.people),
-              label: 'Vendor'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.assignment_outlined),
-              activeIcon: Icon(Icons.assignment),
-              label: 'Idea'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.person_outline),
-              activeIcon: Icon(Icons.person),
-              label: 'Profil'),
-        ],
       ),
     );
   }

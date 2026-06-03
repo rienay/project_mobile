@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project_mobile/ui/profile/profile_page.dart';
 import 'package:project_mobile/ui/vendor/vendor_list_page.dart';
 
 void main() {
@@ -14,10 +15,10 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Wedding Vendor App',
       theme: ThemeData(
-        brightness: Brightness.dark, 
+        brightness: Brightness.light,
         primarySwatch: Colors.pink,
       ),
-      home: const VendorListPage(), 
+      home: const ProfilePage(),
     );
   }
 }

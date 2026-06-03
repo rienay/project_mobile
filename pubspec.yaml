@@ -37,6 +37,7 @@ dependencies:
   http: ^1.6.0
   shared_preferences: ^2.2.3
   url_launcher: ^6.3.2
+  image_picker: ^1.1.2 
 
 dev_dependencies:
   flutter_test:
@@ -67,6 +68,7 @@ flutter:
     - assets/trend_wedding/
     - assets/wedding_reference/
     - assets/vendor/
+    - assets/profile/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

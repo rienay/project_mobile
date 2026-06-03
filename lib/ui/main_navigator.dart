@@ -1,6 +1,8 @@
 // lib/ui/main_navigation.dart
 import 'package:flutter/material.dart';
-import 'package:project_mobile/ui/home/home_page.dart'; // Sesuaikan nama project kamu
+import 'package:project_mobile/ui/home/home_page.dart';
+import 'package:project_mobile/ui/vendor/vendor_list_page.dart';
+import 'package:project_mobile/ui/profile/profile_page.dart'; // Sesuaikan nama project kamu
 
 class MainNavigation extends StatefulWidget {
   const MainNavigation({Key? key}) : super(key: key);
