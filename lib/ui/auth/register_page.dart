@@ -127,6 +127,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       const SizedBox(height: 8),
                       TextField(
                         controller: emailController,
+                        style: const TextStyle(color: Colors.black87),
                         decoration: InputDecoration(
                           contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
                           enabledBorder: OutlineInputBorder(
@@ -147,6 +148,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       TextField(
                         controller: passwordController,
                         obscureText: isObsecurePassword,
+                        style: const TextStyle(color: Colors.black87),
                         decoration: InputDecoration(
                           contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
                           enabledBorder: OutlineInputBorder(
@@ -178,6 +180,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       TextField(
                         controller: confirmPasswordController,
                         obscureText: isObsecureConfirm,
+                        style: const TextStyle(color: Colors.black87),
                         decoration: InputDecoration(
                           contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
                           enabledBorder: OutlineInputBorder(

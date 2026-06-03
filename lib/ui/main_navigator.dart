@@ -2,7 +2,9 @@
 import 'package:flutter/material.dart';
 import 'package:project_mobile/ui/home/home_page.dart';
 import 'package:project_mobile/ui/vendor/vendor_list_page.dart';
-import 'package:project_mobile/ui/profile/profile_page.dart'; // Sesuaikan nama project kamu
+import 'package:project_mobile/ui/profile/profile_page.dart'; 
+import 'package:project_mobile/ui/vendor/vendor_list_page.dart';
+import 'package:project_mobile/ui/idea/idea_page.dart';
 
 class MainNavigation extends StatefulWidget {
   const MainNavigation({Key? key}) : super(key: key);
@@ -15,10 +17,10 @@ class _MainNavigationState extends State<MainNavigation> {
   int _currentIndex = 0;
 
   final List<Widget> _pages = [
-    const HomePage(), 
-    const Center(child: Text('Halaman Vendor')), 
-    const Center(child: Text('Halaman Idea')),   
-    const Center(child: Text('Halaman Profil')), 
+    const HomePage(),
+    const VendorListPage(),
+    const IdeaPage(),
+    const ProfilePage(),
   ];
 
   @override
@@ -26,6 +28,7 @@ class _MainNavigationState extends State<MainNavigation> {
     return Scaffold(
       body: _pages[_currentIndex], 
       bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Colors.white,
         currentIndex: _currentIndex,
         onTap: (index) {
           setState(() {

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project_mobile/ui/profile/profile_page.dart';
+import 'package:project_mobile/ui/splash/splash_page.dart';
 import 'package:project_mobile/ui/vendor/vendor_list_page.dart';
 
 void main() {
@@ -18,7 +19,9 @@ class MyApp extends StatelessWidget {
         brightness: Brightness.light,
         primarySwatch: Colors.pink,
       ),
+     // home: const VendorListPage()
       home: const ProfilePage(),
+      // home: const SplashPage(), 
     );
   }
 }

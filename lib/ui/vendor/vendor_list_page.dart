@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../model/vendor_model.dart';
-import 'vendor_detail_page.dart';
+import 'package:project_mobile/ui/vendor/vendor_detail_page.dart';
 
 class VendorListPage extends StatefulWidget {
   const VendorListPage({super.key});
@@ -10,7 +10,6 @@ class VendorListPage extends StatefulWidget {
 }
 
 class _VendorListPageState extends State<VendorListPage> {
-  // HAPUS: int _currentIndex = 1; ← sudah dihapus, diurus main_navigation.dart
   int _currentBannerIndex = 0;
   final PageController _bannerController = PageController();
 
@@ -143,7 +142,7 @@ class _VendorListPageState extends State<VendorListPage> {
 
               const SliverToBoxAdapter(child: SizedBox(height: 15)),
 
-              // KATEGORI + CARD HORIZONTAL
+              // KATEGORI + CARD 
               ...kategoriVendor.keys.map((kategori) {
                 return SliverToBoxAdapter(
                   child: Column(

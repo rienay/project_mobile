@@ -261,6 +261,7 @@ class _PembayaranPageState extends State<PembayaranPage> {
       controller: ctrl,
       keyboardType: keyboardType,
       obscureText: obscure,
+      style: const TextStyle(color: Colors.black87),
       decoration: InputDecoration(
         hintText: hint,
         hintStyle: TextStyle(color: Colors.grey.shade400, fontSize: 13),
