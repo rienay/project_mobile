@@ -53,12 +53,19 @@ class _VendorListPageState extends State<VendorListPage> {
         
         final ratingVal = double.tryParse(item['rating'].toString()) ?? 0.0;
         final reviewsVal = int.tryParse(item['jumlah_review'].toString()) ?? 0;
+        final isTrendVal = int.tryParse(item['is_trend']?.toString() ?? '') ?? 0;
+        final isWeddingReferenceVal = int.tryParse(item['is_wedding_reference']?.toString() ?? '') ?? 0;
+        final weddingReferenceTitleVal = item['wedding_reference_title'] ?? '';
         
-        String fotoName = item['foto'] ?? '';
-        String mainImage = fotoName.isNotEmpty
-            ? (fotoName.startsWith('http') ? fotoName : 'http://10.78.162.176/ci/lovewedding/public/images/$fotoName')
-            : 'assets/images/default_vendor.png';
+        final String rawRefFoto = item['wedding_reference_foto'] ?? '';
+        final String weddingReferenceFotoVal = rawRefFoto.isNotEmpty
+            ? rawRefFoto.split(',').map((f) => ApiHelper.formatImageUrl(f.trim())).join(',')
+            : '';
             
+        final weddingReferenceDescriptionVal = item['wedding_reference_description'] ?? '';
+        final trendFotoVal = ApiHelper.formatImageUrl(item['trend_foto'] ?? '');
+        final mainImage = ApiHelper.formatImageUrl(item['foto'] ?? '');
+        
         final vendor = Vendor(
           id: item['id']?.toString() ?? '',
           name: item['nama'] ?? '',
@@ -77,6 +84,12 @@ class _VendorListPageState extends State<VendorListPage> {
           reasonsText: item['alasan'] ?? '',
           notesText: item['catatan'] ?? '',
           category: category,
+          isTrend: isTrendVal,
+          isWeddingReference: isWeddingReferenceVal,
+          weddingReferenceTitle: weddingReferenceTitleVal,
+          weddingReferenceFoto: weddingReferenceFotoVal,
+          weddingReferenceDescription: weddingReferenceDescriptionVal,
+          trendFoto: trendFotoVal,
         );
         
         if (!grouped.containsKey(category)) {

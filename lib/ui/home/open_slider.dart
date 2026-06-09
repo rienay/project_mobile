@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:project_mobile/model/vendor_model.dart';
+import 'package:project_mobile/ui/vendor/vendor_detail_page.dart';
+import 'package:project_mobile/ui/vendor/vendor_list_page.dart';
 
 class OpenSlider extends StatefulWidget {
   final List<Map<String, dynamic>> categories;
@@ -27,15 +30,24 @@ class _OpenSliderState extends State<OpenSlider> {
 
     // Mengambil data kategori yang sedang diklik
     final category = widget.categories[widget.initialIndex];
-    final mainImage = category['slider_image'] ?? category['image'] ?? '';
+    final String mainImage = (category['slider_image'] ?? category['image'] ?? '').toString().trim();
 
-    // Menyiapkan 4 foto dummy untuk slider kategori ini menggunakan aset yang ada
-    _sliderImages = [
-      mainImage,
-      'assets/trend_wedding/Garden_Wedding.png',
-      'assets/trend_wedding/Crystal_Ballroom.png',
-      'assets/trend_wedding/Opulent_Vintage.png',
-    ];
+    if (mainImage.startsWith('http')) {
+      // Gambar dari DB (bisa berisi 1-10 URL dipisahkan koma)
+      _sliderImages = mainImage
+          .split(',')
+          .map((img) => img.trim())
+          .where((img) => img.isNotEmpty)
+          .toList();
+    } else {
+      // Gambar lokal (kategori statis awal)
+      _sliderImages = [
+        if (mainImage.isNotEmpty) mainImage,
+        'assets/trend_wedding/Garden_Wedding.png',
+        'assets/trend_wedding/Crystal_Ballroom.png',
+        'assets/trend_wedding/Opulent_Vintage.png',
+      ];
+    }
   }
 
   @override
@@ -48,6 +60,11 @@ class _OpenSliderState extends State<OpenSlider> {
   Widget build(BuildContext context) {
     final category = widget.categories[widget.initialIndex];
     final String title = category['title'] ?? 'Theme';
+    final String description = (category['description'] != null && category['description'].toString().isNotEmpty)
+        ? category['description']
+        : 'Tema $title ini menggabungkan keindahan elegan, suasana romantis, dan latar belakang yang menakjubkan.';
+    final Vendor? vendor = category['vendor'] as Vendor?;
+    final double rating = vendor?.rating ?? 4.0;
 
     return Scaffold(
       body: GestureDetector(
@@ -79,10 +96,13 @@ class _OpenSliderState extends State<OpenSlider> {
                 });
               },
               itemBuilder: (context, index) {
+                final String img = _sliderImages[index];
                 return Container(
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                      image: AssetImage(_sliderImages[index]),
+                      image: img.startsWith('http')
+                          ? NetworkImage(img) as ImageProvider
+                          : AssetImage(img) as ImageProvider,
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -178,7 +198,7 @@ class _OpenSliderState extends State<OpenSlider> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Tema $title ini menggabungkan keindahan elegan, suasana romantis, dan latar belakang yang menakjubkan.',
+                          description,
                           style: const TextStyle(
                             color: Colors.white,
                             fontSize: 15,
@@ -189,7 +209,7 @@ class _OpenSliderState extends State<OpenSlider> {
                         Row(
                           children: List.generate(5, (index) {
                             return Icon(
-                              index < 4 ? Icons.star : Icons.star_border,
+                              index < rating.round() ? Icons.star : Icons.star_border,
                               color: Colors.white,
                               size: 24,
                             );
@@ -222,7 +242,22 @@ class _OpenSliderState extends State<OpenSlider> {
                           height: 48,
                           child: ElevatedButton(
                             onPressed: () {
-                              // TODO: Arahkan ke halaman daftar Vendor
+                              final vendor = category['vendor'] as Vendor?;
+                              if (vendor != null) {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => VendorDetailPage(vendor: vendor),
+                                  ),
+                                );
+                              } else {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const VendorListPage(),
+                                  ),
+                                );
+                              }
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: const Color(0xFFB33671),

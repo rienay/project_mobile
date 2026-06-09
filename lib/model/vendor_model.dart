@@ -20,6 +20,12 @@ class Vendor {
   final String reasonsText;
   final String notesText;
   final String category;
+  final int isTrend;
+  final int isWeddingReference;
+  final String weddingReferenceTitle;
+  final String weddingReferenceFoto;
+  final String weddingReferenceDescription;
+  final String trendFoto;
 
   Vendor({
     this.id = '',
@@ -39,5 +45,11 @@ class Vendor {
     this.reasonsText = '',
     this.notesText = '',
     this.category = '',
+    this.isTrend = 0,
+    this.isWeddingReference = 0,
+    this.weddingReferenceTitle = '',
+    this.weddingReferenceFoto = '',
+    this.weddingReferenceDescription = '',
+    this.trendFoto = '',
   });
 }

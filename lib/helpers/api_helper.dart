@@ -1,11 +1,16 @@
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ApiHelper {
-  // IP Laptop Anda hasil ipconfig: 10.78.162.176
-  // Hubungkan HP Anda ke Wi-Fi yang sama dengan Laptop Anda!
-  static const String baseUrl = 'http://10.78.162.176/ci/lovewedding/public/index.php/api';
+  // IP Laptop Anda hasil ipconfig (Ubah jika IP laptop Anda berubah!)
+  static const String ipAddress = '192.168.11.240';
+  
+  // Jika berjalan di Web/Chrome, gunakan 'localhost'. Jika di Mobile, gunakan IP laptop.
+  static String get activeHost => kIsWeb ? 'localhost' : ipAddress;
+  
+  static String get baseUrl => 'http://$activeHost/ci/lovewedding/public/index.php/api';
 
   // 1. Test Koneksi API
   static Future<Map<String, dynamic>> testConnection() async {
@@ -127,5 +132,20 @@ class ApiHelper {
     } else {
       throw Exception('Gagal mengambil data paket vendor');
     }
+  }
+
+  // 10. Helper format URL Gambar (Localhost translation)
+  static String formatImageUrl(String? url) {
+    if (url == null || url.isEmpty) {
+      return 'assets/images/default_vendor.png';
+    }
+    // Replace localhost atau localhost:8080 dengan Host Aktif (localhost / IP Laptop)
+    String cleanUrl = url;
+    if (cleanUrl.contains('localhost:8080')) {
+      cleanUrl = cleanUrl.replaceAll('localhost:8080', '$activeHost/ci/lovewedding/public');
+    } else if (cleanUrl.contains('localhost')) {
+      cleanUrl = cleanUrl.replaceAll('localhost', '$activeHost/ci/lovewedding/public');
+    }
+    return cleanUrl;
   }
 }

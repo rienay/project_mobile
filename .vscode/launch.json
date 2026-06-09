@@ -1,0 +1,19 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "project_mobile (Mobile/Emulator)",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "project_mobile (Chrome Web)",
+            "request": "launch",
+            "type": "dart",
+            "args": [
+                "-d",
+                "chrome"
+            ]
+        }
+    ]
+}
