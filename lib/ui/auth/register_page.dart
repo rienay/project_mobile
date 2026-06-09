@@ -31,11 +31,6 @@ class _RegisterPageState extends State<RegisterPage> {
       return;
     }
 
-    if (!rememberMe) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Anda harus menyetujui Terms / Remember me')));
-      return;
-    }
-
     setState(() {
       isLoading = true;
     });

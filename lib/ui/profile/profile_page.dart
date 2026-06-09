@@ -1,5 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:project_mobile/helpers/api_helper.dart';
+import 'package:project_mobile/ui/auth/login_page.dart';
 import 'edit_profile.dart';
 import 'detail_profile.dart';
 import 'vendor_favorit_page.dart';
@@ -201,8 +203,20 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
           ),
           TextButton(
-            onPressed: () {
-              Navigator.pop(ctx);
+            onPressed: () async {
+              Navigator.pop(ctx); // Tutup dialog
+              
+              // Hapus token login lokal
+              await ApiHelper.logout();
+              
+              if (!mounted) return;
+              
+              // Arahkan kembali ke halaman Login dan bersihkan riwayat navigasi
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (_) => const LoginPage()),
+                (route) => false,
+              );
             },
             child: const Text(
               'Logout',
