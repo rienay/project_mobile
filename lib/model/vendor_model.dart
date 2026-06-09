@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class Vendor {
+  final String id;
   final String name;
   final String location;
   final double rating;
@@ -10,8 +11,18 @@ class Vendor {
   final String description;
   final List<Map<String, dynamic>> services;
   final List<Map<String, dynamic>> packages;
+  
+  // Fields tambahan dari database
+  final String price;
+  final String phone;
+  final String experience;
+  final String servicesText;
+  final String reasonsText;
+  final String notesText;
+  final String category;
 
   Vendor({
+    this.id = '',
     required this.name,
     required this.location,
     required this.rating,
@@ -21,5 +32,12 @@ class Vendor {
     required this.description,
     required this.services,
     required this.packages,
+    this.price = '0',
+    this.phone = '',
+    this.experience = '',
+    this.servicesText = '',
+    this.reasonsText = '',
+    this.notesText = '',
+    this.category = '',
   });
 }

@@ -13,7 +13,7 @@ class HubungiVendorSheet extends StatelessWidget {
     this.vendorName = 'Vendor',
   });
 
-  static const Color primaryPink = Color(0xFFF43F8B);
+  static const Color primaryPink = Color(0xFFFF4D6D);
   static const Color whatsappGreen = Color(0xFF25D366);
 
   Future<void> _callPhone(BuildContext context) async {
@@ -74,8 +74,8 @@ class HubungiVendorSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: const BoxDecoration(
-        color: Color(0xFFFFF0F5),
-        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+        color: Color(0xFFFFF6F8),
+        borderRadius: BorderRadius.vertical(top: Radius.circular(28)),
       ),
       padding: const EdgeInsets.fromLTRB(24, 20, 24, 36),
       child: Column(

@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:project_mobile/ui/home/home_page.dart';
 import 'package:project_mobile/ui/vendor/vendor_list_page.dart';
 import 'package:project_mobile/ui/profile/profile_page.dart'; 
-import 'package:project_mobile/ui/vendor/vendor_list_page.dart';
-import 'package:project_mobile/ui/idea/idea_page.dart';
+import 'package:project_mobile/ui/layanan/layanan_page.dart';
 
 class MainNavigation extends StatefulWidget {
   const MainNavigation({Key? key}) : super(key: key);
@@ -19,7 +18,7 @@ class _MainNavigationState extends State<MainNavigation> {
   final List<Widget> _pages = [
     const HomePage(),
     const VendorListPage(),
-    const IdeaPage(),
+    const LayananPage(),
     const ProfilePage(),
   ];
 
@@ -53,11 +52,11 @@ class _MainNavigationState extends State<MainNavigation> {
             activeIcon: Image.asset('assets/icons/vendor.png', width: 24, height: 24, color: const Color(0xFFFF4081)),
             label: 'Vendor',
           ),
-          // 3. IDEA
+          // 3. LAYANAN
           BottomNavigationBarItem(
             icon: Image.asset('assets/icons/idea.png', width: 24, height: 24, color: const Color(0xFF5C6B73)),
             activeIcon: Image.asset('assets/icons/idea.png', width: 24, height: 24, color: const Color(0xFFFF4081)),
-            label: 'Idea',
+            label: 'Layanan',
           ),
           // 4. PROFIL
           BottomNavigationBarItem(

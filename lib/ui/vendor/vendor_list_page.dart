@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../model/vendor_model.dart';
 import 'package:project_mobile/ui/vendor/vendor_detail_page.dart';
+import 'package:project_mobile/helpers/api_helper.dart';
 
 class VendorListPage extends StatefulWidget {
   const VendorListPage({super.key});
@@ -12,6 +13,7 @@ class VendorListPage extends StatefulWidget {
 class _VendorListPageState extends State<VendorListPage> {
   int _currentBannerIndex = 0;
   final PageController _bannerController = PageController();
+  bool isLoading = true;
 
   final List<String> bannerImages = [
     'assets/vendor/arjuna_wedding.png',
@@ -19,36 +21,94 @@ class _VendorListPageState extends State<VendorListPage> {
     'assets/vendor/sakura_event.png',
   ];
 
-  final Map<String, List<Vendor>> kategoriVendor = {
-    'Wedding Organizer': [
-      Vendor(name: 'Bella Moments', location: 'Cilacap, Indonesia', rating: 4.0, reviews: 120, mainImage: 'assets/vendor/bella_moment.png', portfolioImages: ['assets/vendor/bella_moment.png'], description: 'Buat momenmu sekarang juga bersama Bella Moments.', services: [], packages: []),
-      Vendor(name: 'Bella Moments 1', location: 'Bandung, Indonesia', rating: 4.5, reviews: 85, mainImage: 'assets/vendor/bella_moment1.png', portfolioImages: ['assets/vendor/bella_moment1.png'], description: 'Buat momenmu sekarang juga.', services: [], packages: []),
-      Vendor(name: 'Bella Moments 2', location: 'Cilacap, Indonesia', rating: 4.9, reviews: 200, mainImage: 'assets/vendor/bella_moment2.png', portfolioImages: ['assets/vendor/bella_moment2.png'], description: 'Buat momenmu sekarang juga.', services: [], packages: []),
-      Vendor(name: 'Bella Moments 3', location: 'Jakarta, Indonesia', rating: 4.8, reviews: 150, mainImage: 'assets/vendor/bella_moment3.png', portfolioImages: ['assets/vendor/bella_moment3.png'], description: 'Buat momenmu sekarang juga.', services: [], packages: []),
-      Vendor(name: 'Bella Moments 4', location: 'Yogyakarta, Indonesia', rating: 4.6, reviews: 64, mainImage: 'assets/vendor/bella_moment4.png', portfolioImages: ['assets/vendor/bella_moment4.png'], description: 'Buat momenmu sekarang juga.', services: [], packages: []),
-    ],
-    'MUA': [
-      Vendor(name: 'Arjuna Wedding', location: 'Cilacap, Indonesia', rating: 4.0, reviews: 95, mainImage: 'assets/vendor/arjuna_wedding.png', portfolioImages: ['assets/vendor/arjuna_wedding.png'], description: 'Pilihan makeup terbaik untuk hari bahagiamu.', services: [], packages: []),
-      Vendor(name: 'Arjuna Wedding 1', location: 'Purwokerto, Indonesia', rating: 4.7, reviews: 24, mainImage: 'assets/vendor/arjuna_wedding1.png', portfolioImages: ['assets/vendor/arjuna_wedding1.png'], description: 'Pilihanmu.', services: [], packages: []),
-      Vendor(name: 'Arjuna Wedding 2', location: 'Bandung, Indonesia', rating: 4.2, reviews: 50, mainImage: 'assets/vendor/arjuna_wedding2.png', portfolioImages: ['assets/vendor/arjuna_wedding2.png'], description: 'Pilihanmu.', services: [], packages: []),
-      Vendor(name: 'Arjuna Wedding 3', location: 'Cilacap, Indonesia', rating: 5.0, reviews: 18, mainImage: 'assets/vendor/arjuna_wedding3.png', portfolioImages: ['assets/vendor/arjuna_wedding3.png'], description: 'Pilihanmu.', services: [], packages: []),
-      Vendor(name: 'Arjuna Wedding 4', location: 'Jakarta, Indonesia', rating: 4.9, reviews: 112, mainImage: 'assets/vendor/arjuna_wedding4.png', portfolioImages: ['assets/vendor/arjuna_wedding4.png'], description: 'Pilihanmu.', services: [], packages: []),
-    ],
-    'PHOTOGRAPHY & VIDEOGRAPHY': [
-      Vendor(name: 'Sakura Event', location: 'Purwokerto, Indonesia', rating: 4.7, reviews: 60, mainImage: 'assets/vendor/sakura_event.png', portfolioImages: ['assets/vendor/sakura_event.png'], description: 'Capturing your beautiful wedding moments.', services: [], packages: []),
-      Vendor(name: 'Sakura Event 1', location: 'Cilacap, Indonesia', rating: 4.9, reviews: 45, mainImage: 'assets/vendor/sakura_event1.png', portfolioImages: ['assets/vendor/sakura_event1.png'], description: 'Capturing your beautiful moments.', services: [], packages: []),
-      Vendor(name: 'Sakura Event 2', location: 'Jakarta, Indonesia', rating: 4.6, reviews: 78, mainImage: 'assets/vendor/sakura_event2.png', portfolioImages: ['assets/vendor/sakura_event2.png'], description: 'Capturing your beautiful moments.', services: [], packages: []),
-      Vendor(name: 'Sakura Event 3', location: 'Bandung, Indonesia', rating: 4.4, reviews: 30, mainImage: 'assets/vendor/sakura_event3.png', portfolioImages: ['assets/vendor/sakura_event3.png'], description: 'Capturing your beautiful moments.', services: [], packages: []),
-      Vendor(name: 'Sakura Event 4', location: 'Semarang, Indonesia', rating: 4.8, reviews: 55, mainImage: 'assets/vendor/sakura_event4.png', portfolioImages: ['assets/vendor/sakura_event4.png'], description: 'Capturing your beautiful moments.', services: [], packages: []),
-    ],
-  };
+  Map<String, List<Vendor>> kategoriVendor = {};
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchVendors();
+  }
+
+  Future<void> _fetchVendors() async {
+    try {
+      final data = await ApiHelper.getVendor();
+      final Map<String, List<Vendor>> grouped = {};
+      
+      for (var item in data) {
+        String rawCategory = item['kategori'] ?? 'Lainnya';
+        String category = rawCategory;
+        if (rawCategory.toLowerCase() == 'make up') {
+          category = 'MUA';
+        } else if (rawCategory.toLowerCase() == 'photography' || rawCategory.toLowerCase() == 'videography') {
+          category = 'PHOTOGRAPHY & VIDEOGRAPHY';
+        } else if (rawCategory.toLowerCase() == 'dekorasi') {
+          category = 'DEKORASI';
+        } else if (rawCategory.toLowerCase() == 'musik') {
+          category = 'MUSIK & ENTERTAINMENT';
+        } else if (rawCategory.toLowerCase() == 'catering') {
+          category = 'CATERING';
+        } else if (rawCategory.toLowerCase().contains('organizer') || rawCategory.toLowerCase().contains('planner')) {
+          category = 'WEDDING ORGANIZER';
+        }
+        
+        final ratingVal = double.tryParse(item['rating'].toString()) ?? 0.0;
+        final reviewsVal = int.tryParse(item['jumlah_review'].toString()) ?? 0;
+        
+        String fotoName = item['foto'] ?? '';
+        String mainImage = fotoName.isNotEmpty
+            ? (fotoName.startsWith('http') ? fotoName : 'http://10.78.162.176/ci/lovewedding/public/images/$fotoName')
+            : 'assets/images/default_vendor.png';
+            
+        final vendor = Vendor(
+          id: item['id']?.toString() ?? '',
+          name: item['nama'] ?? '',
+          location: item['lokasi'] ?? '',
+          rating: ratingVal,
+          reviews: reviewsVal,
+          mainImage: mainImage,
+          portfolioImages: [mainImage],
+          description: item['deskripsi'] ?? '',
+          services: [],
+          packages: [],
+          price: item['harga']?.toString() ?? '0',
+          phone: item['no_telepon'] ?? '',
+          experience: item['pengalaman'] ?? '',
+          servicesText: item['layanan'] ?? '',
+          reasonsText: item['alasan'] ?? '',
+          notesText: item['catatan'] ?? '',
+          category: category,
+        );
+        
+        if (!grouped.containsKey(category)) {
+          grouped[category] = [];
+        }
+        grouped[category]!.add(vendor);
+      }
+      
+      setState(() {
+        kategoriVendor = grouped;
+        isLoading = false;
+      });
+    } catch (e) {
+      debugPrint("Gagal mengambil data vendor: $e");
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
-        child: NotificationListener<ScrollNotification>(
+        child: isLoading
+            ? const Center(
+                child: CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation<Color>(Color(0xFFF43F8B)),
+                ),
+              )
+            : NotificationListener<ScrollNotification>(
           onNotification: (_) => false,
           child: CustomScrollView(
             slivers: [
@@ -191,19 +251,33 @@ class _VendorListPageState extends State<VendorListPage> {
                                       child: ClipRRect(
                                         borderRadius:
                                             BorderRadius.circular(20),
-                                        child: Image.asset(
-                                          vendor.mainImage,
-                                          fit: BoxFit.cover,
-                                          errorBuilder:
-                                              (context, error, stackTrace) {
-                                            return Container(
-                                              color: Colors.grey.shade200,
-                                              child: const Icon(
-                                                  Icons.broken_image,
-                                                  color: Colors.grey),
-                                            );
-                                          },
-                                        ),
+                                        child: vendor.mainImage.startsWith('http')
+                                            ? Image.network(
+                                                vendor.mainImage,
+                                                fit: BoxFit.cover,
+                                                errorBuilder:
+                                                    (context, error, stackTrace) {
+                                                  return Container(
+                                                    color: Colors.grey.shade200,
+                                                    child: const Icon(
+                                                        Icons.broken_image,
+                                                        color: Colors.grey),
+                                                  );
+                                                },
+                                              )
+                                            : Image.asset(
+                                                vendor.mainImage,
+                                                fit: BoxFit.cover,
+                                                errorBuilder:
+                                                    (context, error, stackTrace) {
+                                                  return Container(
+                                                    color: Colors.grey.shade200,
+                                                    child: const Icon(
+                                                        Icons.broken_image,
+                                                        color: Colors.grey),
+                                                  );
+                                                },
+                                              ),
                                       ),
                                     ),
                                     Positioned.fill(
@@ -250,7 +324,7 @@ class _VendorListPageState extends State<VendorListPage> {
                                             children: List.generate(5,
                                                 (starIndex) {
                                               return Icon(
-                                                starIndex < 4
+                                                starIndex < vendor.rating.round()
                                                     ? Icons.star
                                                     : Icons.star_border,
                                                 color: Colors.white,

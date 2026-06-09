@@ -118,4 +118,14 @@ class ApiHelper {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.remove('token');
   }
+
+  // 9. Ambil Data Paket Vendor (Tambahan)
+  static Future<List<dynamic>> getPaketVendor() async {
+    final response = await http.get(Uri.parse('$baseUrl/paket-vendor'));
+    if (response.statusCode == 200) {
+      return jsonDecode(response.body);
+    } else {
+      throw Exception('Gagal mengambil data paket vendor');
+    }
+  }
 }
