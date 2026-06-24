@@ -148,4 +148,15 @@ class ApiHelper {
     }
     return cleanUrl;
   }
+
+  // 11. Helper format URL Gambar Layanan
+  static String formatLayananImageUrl(String? filename) {
+    if (filename == null || filename.isEmpty) {
+      return '';
+    }
+    if (filename.startsWith('http')) {
+      return formatImageUrl(filename);
+    }
+    return 'http://$activeHost/ci/lovewedding/public/uploads/layanan/$filename';
+  }
 }

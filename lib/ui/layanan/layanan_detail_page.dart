@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
+import '../../helpers/api_helper.dart';
 
 class LayananDetailPage extends StatelessWidget {
   final Map<String, dynamic> layanan;
@@ -51,11 +52,7 @@ class LayananDetailPage extends StatelessWidget {
     final String priceStr = _formatCurrency(layanan['harga']);
     final String gambar = layanan['gambar'] ?? '';
 
-    final imageUrl = gambar.isNotEmpty
-        ? (gambar.startsWith('http')
-            ? gambar
-            : 'http://10.78.162.176/ci/lovewedding/public/uploads/layanan/$gambar')
-        : '';
+    final imageUrl = ApiHelper.formatLayananImageUrl(gambar);
 
     // Split description by newlines to match the foreach explode view in CI4
     final List<String> points = desc

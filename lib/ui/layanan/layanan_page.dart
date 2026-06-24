@@ -109,11 +109,7 @@ class _LayananPageState extends State<LayananPage> {
                                 final price = _formatCurrency(item['harga']);
                                 final gambar = item['gambar'] ?? '';
                                 
-                                final imageUrl = gambar.isNotEmpty
-                                    ? (gambar.startsWith('http')
-                                        ? gambar
-                                        : 'http://10.78.162.176/ci/lovewedding/public/uploads/layanan/$gambar')
-                                    : '';
+                                final imageUrl = ApiHelper.formatLayananImageUrl(gambar);
 
                                 return GestureDetector(
                                   onTap: () {
